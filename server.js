@@ -14,6 +14,12 @@ const MIME_TYPES = {
 
 const STATIC_PATH = path.join(process.cwd());
 
+const receiveArgs = async (req) => {
+    const buffers = [];
+    for await (const chunk of req) buffers.push(chunk);
+    return  Buffer.concat(buffers);
+};
+
 const server =  http.createServer(async (req, res) => {
 
     if(req.url === '/' || req.url.includes('.')){
@@ -38,7 +44,10 @@ const server =  http.createServer(async (req, res) => {
                 res.end( content, 'utf-8');
             }
         });
-    }else if(req.url === '/save-video'){
+    }else if(req.url === '/save-video' && req.method === 'POST'){
+        console.log('/save-video')
+        const data = await receiveArgs(req)
+
         res.writeHead(200, { 'Content-Type': 'text/plain' });
         res.end( JSON.stringify({status: 'ok'}));
     }else {
