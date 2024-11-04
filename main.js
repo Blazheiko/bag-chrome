@@ -36,6 +36,7 @@ const selectedFile = () => {
     videoElement.controls = true;
     videoElement.width = 640;
     videoElement.height = 360;
+    videoElement.muted = true;
     videoElement.autoplay = true;
     inputElement.disabled = true;
     const divVideo = document.getElementById('videoContainer')
