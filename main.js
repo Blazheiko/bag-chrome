@@ -24,10 +24,12 @@ const getCanvas = (el) => {
 }
 let videoFile = null;
 let videoElement = null;
+// let copyVideoFile = null;
 const selectedFile = () => {
     console.log('selectedFile')
     const inputElement = document.getElementById('input')
     videoFile = inputElement.files[0]
+    // copyVideoFile = new File([videoFile], videoFile.name, {type: videoFile.type});
     console.log(videoFile)
     if(!videoFile) return
     const url = URL.createObjectURL(videoFile)
@@ -52,7 +54,8 @@ const sendVideo = async () => {
     const canvas = getCanvas(videoElement);
     const poster = await new Promise(resolve => canvas.toBlob(resolve, "image/jpeg", 0.95));
     const formData = new FormData()
-    formData.append('video', videoFile )
+    // formData.append('copyVideoFile', videoFile ) // it works
+    formData.append('video', videoFile ) // it error
     formData.append('poster', poster )
     try {
         const response = await fetch('/save-video', {
