@@ -39,6 +39,7 @@ self.addEventListener('activate', (event) => {
 });
 
 self.addEventListener('fetch', (event) => {
+    if (event.request.method !== "GET") return;
     if (event.request.url.endsWith('/') || event.request.url.endsWith('/index.html')) {
         event.respondWith(
             caches.match('/index.html').then((response) => {
