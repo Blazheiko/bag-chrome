@@ -36,8 +36,8 @@ const selectedFile = () => {
     videoElement = document.createElement('video');
     videoElement.src = url;
     videoElement.controls = true;
-    videoElement.width = 640;
-    videoElement.height = 360;
+    videoElement.width = 400;
+    videoElement.height = 300;
     videoElement.muted = true;
     videoElement.autoplay = true;
     inputElement.disabled = true;
@@ -65,8 +65,18 @@ const sendVideo = async () => {
                 "Content-Type": "multipart/form-data",
             },
         });
-        const json = await response.json();
-        console.log(JSON.stringify(json));
+        const data = await response.json();
+        console.log(data);
+        if(!data || data.status !== 'ok') return;
+        console.log('Send Video successfully')
+        const videoContainer = document.getElementById('videoContainer')
+        const span = document.createElement('span');
+        span.innerText = 'Sent Video. Test successfully';
+        span.style.color = 'green';
+        videoContainer.append(span)
+        const button = document.getElementById('button')
+        button.disabled = true
+
     } catch (error) {
         console.error("Error:", error);
     }
